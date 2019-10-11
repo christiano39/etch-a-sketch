@@ -7,13 +7,11 @@ let gridHeight = defaultGridSize;
 
 
 function askforGridSize() {
-    let gridSize = window.prompt("What size grid do you want?", "Please enter a number (1-60)");
+    let gridSize = window.prompt("What size grid do you want?", "Please enter a number (1-70)");
     gridSize = parseInt(gridSize, 10);
-    console.log(gridSize);
-    console.log(typeof gridSize);
     if (gridSize === NaN){
         return 25;
-    }else if (!(gridSize > 0 && gridSize < 61)){
+    }else if (!(gridSize > 0 && gridSize < 71)){
         return 25;
     }else {
         return gridSize;
@@ -26,7 +24,6 @@ function addElementsToPage(gridWidth, gridHeight) {
         for (j = 0; j < gridHeight; j++) {
             let div = document.createElement("div");
             div.classList.add("box");
-            //div.classList.add("box-" + boxNumber);
             div.setAttribute("id", ("box-" + boxNumber));
             gridContainer.appendChild(div);
             boxNumber++;
@@ -97,4 +94,3 @@ setEventListeners(gridWidth, gridHeight);
 resetButton.addEventListener("click", function () {
     resetEventListeners(gridWidth, gridHeight);
 });
-
