@@ -7,11 +7,11 @@ let gridHeight = defaultGridSize;
 
 
 function askforGridSize() {
-    let gridSize = window.prompt("What size grid do you want?", "Please enter a number (1-70)");
+    let gridSize = window.prompt("What size grid do you want?", "Please enter a number (1-100)");
     gridSize = parseInt(gridSize, 10);
     if (gridSize === NaN){
         return 25;
-    }else if (!(gridSize > 0 && gridSize < 71)){
+    }else if (!(gridSize > 0 && gridSize < 101)){
         return 25;
     }else {
         return gridSize;
