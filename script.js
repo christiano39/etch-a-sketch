@@ -1,9 +1,26 @@
 const gridContainer = document.querySelector("#grid-container");
 const resetButton = document.getElementById("reset-button");
-let gridWidth = 24;
-let gridHeight = 24;
+const gridSize = document.getElementById("grid-size");
+let defaultGridSize = 25;
+let gridWidth = defaultGridSize;
+let gridHeight = defaultGridSize;
 
-function addElementsToPage() {    
+
+function askforGridSize() {
+    let gridSize = window.prompt("What size grid do you want?", "Please enter a number (1-60)");
+    gridSize = parseInt(gridSize, 10);
+    console.log(gridSize);
+    console.log(typeof gridSize);
+    if (gridSize === NaN){
+        return 25;
+    }else if (!(gridSize > 0 && gridSize < 61)){
+        return 25;
+    }else {
+        return gridSize;
+    }
+}
+
+function addElementsToPage(gridWidth, gridHeight) {    
     let boxNumber = 1;
     for (i = 0; i < gridWidth; i++) {
         for (j = 0; j < gridHeight; j++) {
@@ -33,8 +50,8 @@ function arrangeGrid(){
     }
 }
 
-function createGrid() {
-    addElementsToPage();
+function createGrid(gridWidth, gridHeight) {
+    addElementsToPage(gridWidth, gridHeight);
     arrangeGrid();
 }
 
@@ -46,7 +63,7 @@ function unColorBox(box) {
     box.classList.remove("colored");
 }
 
-function setEventListeners () {
+function setEventListeners (gridWidth, gridHeight) {
     for (let i = 1; i <= (gridWidth * gridHeight); i++) {
         let id = "box-" + i;
         let box = document.getElementById(id);
@@ -56,18 +73,28 @@ function setEventListeners () {
     }
 }
 
-function resetEventListeners() {
+function resetEventListeners(gridWidth, gridHeight) {
     for (let i = 1; i <= (gridWidth * gridHeight); i++) {
         let id = "box-" + i;
         let box = document.getElementById(id);
-        box.addEventListener("mouseover", function () {
-            unColorBox(box);
-        })
+        unColorBox(box);
     }
+    
     setEventListeners();
 }
 
-createGrid();
-setEventListeners();
+function setGridSize (size) {
+    gridWidth = size;
+    gridHeight = size;
+}
 
-resetButton.addEventListener("click", resetEventListeners());
+let gridSizeInt = askforGridSize();
+gridWidth = gridSizeInt;
+gridHeight = gridSizeInt;
+createGrid(gridWidth, gridHeight);
+setEventListeners(gridWidth, gridHeight);
+
+resetButton.addEventListener("click", function () {
+    resetEventListeners(gridWidth, gridHeight);
+});
+
