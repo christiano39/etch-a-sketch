@@ -47,25 +47,50 @@ function arrangeGrid(){
     }
 }
 
+function randomNumber(maxNumber){
+    let randNum = Math.floor(Math.random() * maxNumber);
+    return randNum;
+}
+
 function createGrid(gridWidth, gridHeight) {
     addElementsToPage(gridWidth, gridHeight);
     arrangeGrid();
 }
 
-function colorBox(box) {
-    box.classList.add("colored");
+function colorBox(box, color) {
+    if (color.toLowerCase() === "black"){
+        box.style.backgroundColor = "black";
+    }else if (color.toLowerCase() === "random"){
+        box.style.backgroundColor = getRandomRBG();
+    }else if (color.toLowerCase() === "red"){
+        box.style.backgroundColor = "red";
+    }else if (color.toLowerCase() === "blue"){
+        box.style.backgroundColor = "blue";
+    }else if (color.toLowerCase() === "green"){
+        box.style.backgroundColor = "green";
+    }else{
+        box.style.backgroundColor = "black";
+    }
+    
 }
 
 function unColorBox(box) {
-    box.classList.remove("colored");
+    box.style.backgroundColor = "white";
 }
 
-function setEventListeners (gridWidth, gridHeight) {
+function getRandomRBG() {
+    let red = randomNumber(255);
+    let blue = randomNumber(255);
+    let green = randomNumber(255);
+    return "rgb(" + red + ", " + blue + ", " + green + ")"
+}
+
+function setEventListeners (gridWidth, gridHeight, color) {
     for (let i = 1; i <= (gridWidth * gridHeight); i++) {
         let id = "box-" + i;
         let box = document.getElementById(id);
         box.addEventListener("mouseover", function () {
-            colorBox(box);
+            colorBox(box, color);
         })
     }
 }
@@ -86,10 +111,11 @@ function setGridSize (size) {
 }
 
 let gridSizeInt = askforGridSize();
+let paintColor = window.prompt("Choose a paint color", "choices are black, red, green, blue, or random");
 gridWidth = gridSizeInt;
 gridHeight = gridSizeInt;
 createGrid(gridWidth, gridHeight);
-setEventListeners(gridWidth, gridHeight);
+setEventListeners(gridWidth, gridHeight, paintColor);
 
 resetButton.addEventListener("click", function () {
     resetEventListeners(gridWidth, gridHeight);
